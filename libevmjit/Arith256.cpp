@@ -1,5 +1,3 @@
-#include "Arith256.h"
-
 #include <iostream>
 #include <iomanip>
 
@@ -11,6 +9,8 @@
 #include "Type.h"
 #include "Endianness.h"
 #include "Utils.h"
+
+#include "Arith256.h"
 
 namespace dev
 {

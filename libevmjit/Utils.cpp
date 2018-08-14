@@ -4,7 +4,7 @@
 
 #include <llvm/Support/Debug.h>
 
-#include "BuildInfo.gen.h"
+#include "BuildInfo.h"
 
 namespace dev
 {

@@ -3,7 +3,7 @@
 #include <evmc/evmc.h>
 
 #ifdef _MSC_VER
-#ifdef evmjit_EXPORTS
+#ifdef EVMJIT_EXPORTS
 #define EXPORT __declspec(dllexport)
 #else
 #define EXPORT

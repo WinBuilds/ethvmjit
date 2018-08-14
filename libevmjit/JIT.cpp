@@ -11,7 +11,6 @@
 #include <llvm/ExecutionEngine/SectionMemoryManager.h>
 #include <llvm/Support/TargetSelect.h>
 #include <llvm/Support/raw_os_ostream.h>
-#include <evmc/evmc.h>
 #include "preprocessor/llvm_includes_end.h"
 
 #include "Ext.h"
@@ -20,14 +19,14 @@
 #include "Cache.h"
 #include "ExecStats.h"
 #include "Utils.h"
-#include "BuildInfo.gen.h"
+#include "BuildInfo.h"
 
 
 // FIXME: Move these checks to evmc tests.
 static_assert(sizeof(evmc_uint256be) == 32, "evmc_uint256be is too big");
 static_assert(sizeof(evmc_address) == 20, "evmc_address is too big");
-static_assert(sizeof(evmc_result) == 64, "evmc_result does not fit cache line");
-static_assert(sizeof(evmc_message) <= 18*8, "evmc_message not optimally packed");
+static_assert(sizeof(evmc_result) <= 64, "evmc_result does not fit cache line");
+static_assert(sizeof(evmc_message) <= 22*8, "evmc_message not optimally packed");
 static_assert(offsetof(evmc_message, code_hash) % 8 == 0, "evmc_message.code_hash not aligned");
 
 // Check enums match int size.
@@ -36,7 +35,7 @@ static_assert(sizeof(evmc_call_kind)  == sizeof(int), "Enum `evmc_call_kind` is 
 static_assert(sizeof(evmc_revision)       == sizeof(int), "Enum `evmc_revision` is not the size of int");
 
 constexpr size_t optionalDataSize = sizeof(evmc_result) - offsetof(evmc_result, create_address);
-static_assert(optionalDataSize == sizeof(evmc_result_optional_data), "");
+//static_assert(optionalDataSize == sizeof(evmc_result_optional_data), "sizeof(evmc_result_optional_data) !=  optionalDataSize");
 
 
 namespace dev
@@ -565,7 +564,8 @@ JITImpl::JITImpl()
         "evmjit",
         EVMJIT_VERSION,
         evmjit::destroy,
-        evmjit::execute,
+        evmjit::execute, 
+        0,
         evmjit::setOption,
     })
 {

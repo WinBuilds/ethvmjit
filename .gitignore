@@ -1,7 +1,17 @@
-# CLion files
-/.idea/
+.idea/
+bin/
+deps/
+deps64/
 
-# Convenient binary output and build dirs
-/bin/
-/build/
-/deps/
+build/
+build-*/
+build_*/
+
+.vs/
+ipch/
+*.aps
+*.suo
+*.VC.db
+*.VC.opendb
+
+*.lnk
